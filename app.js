@@ -16,7 +16,7 @@ app.use("/namaj", namajRoutes);
 
 mongoose
   .connect(
-    "mongodb+srv://root:gottaqdiewithiman_315@namajtimeapi.ri4nn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongodb+srv://root:gottadiewithiman_315@namajtimeapi.ri4nn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   )
   .then((result) => {
     app.listen(config.port, () =>
