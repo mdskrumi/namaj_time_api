@@ -20,10 +20,9 @@ const getDayTimeByLatLon = (req, res, next) => {
         });
       } else {
         if (body.code === 200) {
-          makeEasyModel(body.data);
           return res.status(200).json({
             messgage: "You have successfully fetched the data.",
-            data: body.data,
+            data: makeEasyModel(body.data),
             status: "success",
             status_code: 200,
           });

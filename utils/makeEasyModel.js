@@ -47,17 +47,18 @@ const makeNamajObject = (data) => {
   if (data) {
     const { timings, date, meta } = data;
     if (timings) model = { ...model, ...manageTimings(timings) };
-    console.log(model);
   }
+  return model;
 };
 
 const makeEasyModel = (data) => {
   const modifiedData = [];
   if (data && data.length > 0) {
     data.forEach((element) => {
-      makeNamajObject(element);
+      modifiedData.push(makeNamajObject(element));
     });
   }
+  return modifiedData;
 };
 
 module.exports = {
