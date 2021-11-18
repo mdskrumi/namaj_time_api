@@ -27,15 +27,24 @@ const makeForbiddenTimeDiff = (time, diff) => {
   return res;
 };
 
-const manageTimings = (timings) => {
+const manageTimings = (timings, forbiddenTimeSafety) => {
   return {
     fajr: formettedTime(timings.Fajr),
     sunrise: formettedTime(timings.Sunrise),
-    forbiddenAfterFarj: makeForbiddenTimeDiff(timings.Sunrise, 20),
-    forbiddenBeforeDhuhr: makeForbiddenTimeDiff(timings.Dhuhr, -20),
+    forbiddenAfterFarj: makeForbiddenTimeDiff(
+      timings.Sunrise,
+      forbiddenTimeSafety
+    ),
+    forbiddenBeforeDhuhr: makeForbiddenTimeDiff(
+      timings.Dhuhr,
+      -1 * forbiddenTimeSafety
+    ),
     dhuhr: formettedTime(timings.Dhuhr),
     asr: formettedTime(timings.Asr),
-    forbiddenBeforeMaghrib: makeForbiddenTimeDiff(timings.Sunset, -20),
+    forbiddenBeforeMaghrib: makeForbiddenTimeDiff(
+      timings.Sunset,
+      -1 * forbiddenTimeSafety
+    ),
     sunset: formettedTime(timings.Sunset),
     maghrib: formettedTime(timings.Maghrib),
     isha: formettedTime(timings.Isha),
@@ -53,11 +62,12 @@ const manageMeta = (meta) => {
   };
 };
 
-const makeNamajObject = (data) => {
+const makeNamajObject = (data, forbiddenTimeSafety) => {
   let model = {};
   if (data) {
     const { timings, date, meta } = data;
-    if (timings) model = { ...model, ...manageTimings(timings) };
+    if (timings)
+      model = { ...model, ...manageTimings(timings, forbiddenTimeSafety) };
     if (date) model = { ...model, ...manageDate(date) };
     if (meta) model = { ...model, ...manageMeta(meta) };
   }
@@ -74,12 +84,12 @@ const makeEasyMonthModel = (data) => {
   return modifiedData;
 };
 
-const makeEasyDayModel = (data, day) => {
+const makeEasyDayModel = (data, day, forbiddenTimeSafety) => {
   let modifiedData = {};
   if (data && data.length > 0) {
     data.forEach((element) => {
       if (day === parseInt(element.date.gregorian.day)) {
-        modifiedData = makeNamajObject(element);
+        modifiedData = makeNamajObject(element, forbiddenTimeSafety);
         return;
       }
     });

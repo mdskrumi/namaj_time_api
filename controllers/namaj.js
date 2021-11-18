@@ -14,13 +14,13 @@ const getDayTimeByLatLon = (req, res, next) => {
   const lat = 23.777176;
   const lon = 90.399452;
   const day = parseInt(req.query.day);
-  // const school = req.query.school;
-  // const method = req.query.method;
-  // const forbiddenTimeSafety = req.query.forbiddenTimeSafety;
+  const school = req.query.school || 1;
+  const method = req.query.method || 1;
+  const forbiddenTimeSafety = parseInt(req.query.forbiddenTimeSafety) || 20;
 
   // school
   request(
-    `http://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${lon}`,
+    `http://api.aladhan.com/v1/calendar?latitude=${lat}&longitude=${lon}&school=${school}&method=${method}`,
     { json: true },
     (err, _, body) => {
       if (err) {
@@ -34,7 +34,7 @@ const getDayTimeByLatLon = (req, res, next) => {
         if (body.code === 200) {
           return res.status(200).json({
             messgage: "You have successfully fetched the data.",
-            data: makeEasyDayModel(body.data, day),
+            data: makeEasyDayModel(body.data, day, forbiddenTimeSafety),
             status: "success",
             status_code: 200,
           });
