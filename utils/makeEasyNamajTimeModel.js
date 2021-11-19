@@ -29,6 +29,7 @@ const makeForbiddenTimeDiff = (time, diff) => {
 
 const manageTimings = (timings, forbiddenTimeSafety) => {
   return {
+    sahari: formettedTime(timings.Imsak),
     fajr: formettedTime(timings.Fajr),
     sunrise: formettedTime(timings.Sunrise),
     forbiddenAfterFarj: makeForbiddenTimeDiff(
