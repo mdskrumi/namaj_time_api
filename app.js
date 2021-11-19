@@ -15,6 +15,12 @@ app.use(bodyParser.json());
 
 app.use("/namaj", namajRoutes);
 app.use("/location", locationRoutes);
+app.use((req, res, next) => {
+  return res.status(404).json({
+    status_code: 404,
+    message: "Invalid API",
+  });
+});
 
 // mongoose
 //   .connect(

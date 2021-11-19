@@ -74,11 +74,11 @@ const makeNamajObject = (data, forbiddenTimeSafety) => {
   return model;
 };
 
-const makeEasyMonthModel = (data) => {
+const makeEasyMonthModel = (data, forbiddenTimeSafety) => {
   const modifiedData = [];
   if (data && data.length > 0) {
     data.forEach((element) => {
-      modifiedData.push(makeNamajObject(element));
+      modifiedData.push(makeNamajObject(element, forbiddenTimeSafety));
     });
   }
   return modifiedData;
