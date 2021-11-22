@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const config = require("./config");
 
 // Route Files
+const nameRoutes = require("./routes/name");
 const namajRoutes = require("./routes/namaj");
 const locationRoutes = require("./routes/location");
 
@@ -13,8 +14,10 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use("/asma-ul-husna", nameRoutes);
 app.use("/namaj", namajRoutes);
 app.use("/location", locationRoutes);
+
 app.use((req, res, next) => {
   return res.status(404).json({
     status_code: 404,
